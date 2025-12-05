@@ -29,5 +29,14 @@ namespace api.Controllers
             if (customer is null) return NotFound();
             return Ok(new {Success = true, Data = customer});
         }
+        //post är aldrig asynkron den vill man vänta in ska komma in.
+        [HttpPost]
+        public async Task<ActionResult> AddCustomer (Customer model)
+        {
+            context.Customers.Add(model);
+            await context.SaveChangesAsync();
+
+            return Ok(new {Success = true, Data = "Customer Added."});
+        }
     }
 }
